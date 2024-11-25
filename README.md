@@ -5,7 +5,7 @@ An HTTP proxy designed to perform MITM phishing attacks, allowing users to injec
 The project is still under development, and any contributions are welcome. There are currently some limitations to Cloudflare DDoS protection pages and other related services, but many patches will be coming soon.
 # Setup
 1. Install project:<br>
-`git clone https://github.com/irc-glory/evil-proxy.git`<br>
+`gh repo clone irc-glory/evil-proxy`<br>
 `cd evil-proxy`
 2. Install modules:<br>
 `pip install -r requirements.txt`
