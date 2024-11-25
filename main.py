@@ -8,7 +8,7 @@ print(f"""{Fore.RED}
 ██ ▄▄▄█▀███▀█▄██ █████ ▄▄ █ ▄▄▀█▀▄▄▀█ █ █ ██ ███
 ██ ▄▄▄██ ▀ ██ ██ █████ ▀▀ █ ▀▀▄█ ██ █▀▄▀█ ▀▀ ███
 ██ ▀▀▀███▄███▄██▄▄████ ████▄█▄▄██▄▄██▄█▄█▀▀▀▄███
-▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ {Fore.LIGHTBLACK_EX}v1.0{Fore.RED}
+▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ {Fore.LIGHTBLACK_EX}v0.1{Fore.RED}
 {Fore.RESET}""")
 
 target = input(f"{Fore.WHITE}[ {Fore.RED}Target {Fore.WHITE}] --> {Fore.LIGHTBLACK_EX}")
