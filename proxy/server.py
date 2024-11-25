@@ -12,7 +12,7 @@ def start_proxy(target, host, port, secret):
 
     @app.route(f'/ep/assets/EvilProxyBanner.png')
     def panel_banner():
-        return send_from_directory('panel', 'banner.png')
+        return send_from_directory('panel', 'EvilProxyBanner.png')
 
     @app.route('/evil-script.js')
     def payload():
