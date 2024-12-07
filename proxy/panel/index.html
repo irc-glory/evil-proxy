@@ -11,6 +11,7 @@
         padding: 0;
         background-color: #111111;
         color: #ffffff;
+        min-height: 100vh;
     }
 
     header {
@@ -23,7 +24,7 @@
         margin: 20px;
     }
 
-    header svg {
+    header img {
         width: 150px;
         height: auto;
         margin-right: 15px;
@@ -32,10 +33,8 @@
 
     .container {
         display: flex;
-        max-width: 1200px;
-        margin: 20px auto;
-        height: calc(100vh - 80px);
         margin: 20px;
+        gap: 20px;
     }
 
     .sidebar {
@@ -44,6 +43,9 @@
         padding: 15px;
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        height: calc(100vh - 150px);
+        position: sticky;
+        top: 20px;
     }
 
     .sidebar a {
@@ -62,45 +64,124 @@
 
     .main-content {
         flex: 1;
-        padding: 20px;
+        padding: 25px;
         background-color: #1a1a1a;
-        border-radius: 8px;
-        margin-left: 20px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         display: none;
     }
 
     h2 {
         color: #c50f1f;
-        margin-bottom: 10px;
-    }
-
-    .section {
         margin-bottom: 20px;
-        padding: 15px;
-        border: 1px solid #444;
-        border-radius: 5px;
-        background-color: #333333;
+        font-size: 1.8em;
     }
 
     .warning {
         margin-bottom: 20px;
-        padding: 15px;
+        padding: 20px;
         border: 1px solid #f7eb0e;
-        border-radius: 5px;
+        border-radius: 8px;
         background-color: #2d2b00;
+        animation: pulse 2s infinite;
     }
 
-    .item {
-        padding: 10px;
-        margin: 5px 0;
-        background-color: #444;
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(247, 235, 14, 0.2); }
+        70% { box-shadow: 0 0 0 10px rgba(247, 235, 14, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(247, 235, 14, 0); }
+    }
+
+    .changelog {
+        background: linear-gradient(150deg, #2a2a2a, #222222);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .changelog-entry {
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+    }
+
+    .changelog-entry::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #c50f1f;
+    }
+
+    .server-secret {
+        background: linear-gradient(150deg, #2a2a2a, #222222);
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .copy-button {
+        background-color: #c50f1f;
+        border: none;
+        color: white;
+        padding: 8px 16px;
         border-radius: 4px;
+        cursor: pointer;
         transition: background-color 0.3s;
     }
 
-    .item:hover {
-        background-color: #555;
+    .copy-button:hover {
+        background-color: #a00c19;
+    }
+
+    .cookie-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 15px;
+    }
+
+    .cookie-card {
+        background: linear-gradient(150deg, #2a2a2a, #222222);
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cookie-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background-color: #c50f1f;
+    }
+
+    .cookie-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .cookie-name {
+        color: #c50f1f;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .cookie-value {
+        color: #888;
+        font-family: monospace;
+        word-break: break-all;
+    }
+
+    .cookie-timestamp {
+        font-size: 0.8em;
+        color: #666;
+        margin-top: 10px;
     }
 
     @media (max-width: 768px) {
@@ -109,10 +190,15 @@
         }
         .sidebar {
             width: auto;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            height: 100%;
+            position: static;
         }
         .main-content {
             margin-left: 0;
+        }
+        .cookie-grid {
+            grid-template-columns: 1fr;
         }
     }
     </style>
@@ -120,65 +206,51 @@
 <body>
 
 <header>
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="430" height="74" viewbox="0 0 400 74">
-        <path d="M0 0 C141.9 0 283.8 0 430 0 C430 24.42 430 48.84 430 74 C288.1 74 146.2 74 0 74 C0 49.58 0 25.16 0 0 Z " fill="#C50F1F" transform="translate(0,0)"/>
-        <path d="M0 0 C11.88 0 23.76 0 36 0 C36 12.54 36 25.08 36 38 C27.09 38 18.18 38 9 38 C9 44.27 9 50.54 9 57 C6.03 57 3.06 57 0 57 C0 38.19 0 19.38 0 0 Z " fill="#111111" transform="translate(197,8)"/>
-        <path d="M0 0 C11.88 0 23.76 0 36 0 C36 3.3 36 6.6 36 10 C27.09 10 18.18 10 9 10 C9 12.97 9 15.94 9 19 C17.91 19 26.82 19 36 19 C36 22.3 36 25.6 36 29 C27.09 29 18.18 29 9 29 C9 35.27 9 41.54 9 48 C17.91 48 26.82 48 36 48 C36 50.97 36 53.94 36 57 C24.12 57 12.24 57 0 57 C0 38.19 0 19.38 0 0 Z " fill="#111111" transform="translate(17,8)"/>
-        <path d="M0 0 C8.91 0 17.82 0 27 0 C27 3.3 27 6.6 27 10 C21.06 10 15.12 10 9 10 C9 16.27 9 22.54 9 29 C14.94 29 20.88 29 27 29 C27 31.97 27 34.94 27 38 C29.97 38 32.94 38 36 38 C36 41.3 36 44.6 36 48 C30.06 48 24.12 48 18 48 C18 44.7 18 41.4 18 38 C15.03 38 12.06 38 9 38 C9 41.3 9 44.6 9 48 C6.03 48 3.06 48 0 48 C0 32.16 0 16.32 0 0 Z " fill="#111111" transform="translate(242,8)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 9.57 9 19.14 9 29 C14.94 29 20.88 29 27 29 C27 19.43 27 9.86 27 0 C29.97 0 32.94 0 36 0 C36 15.84 36 31.68 36 48 C33.03 48 30.06 48 27 48 C27 44.7 27 41.4 27 38 C18.09 38 9.18 38 0 38 C0 25.46 0 12.92 0 0 Z " fill="#111111" transform="translate(368,8)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 12.54 9 25.08 9 38 C11.97 38 14.94 38 18 38 C18 41.3 18 44.6 18 48 C12.06 48 6.12 48 0 48 C0 32.16 0 16.32 0 0 Z " fill="#111111" transform="translate(143,8)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 3.3 9 6.6 9 10 C11.97 10 14.94 10 18 10 C18 6.7 18 3.4 18 0 C20.97 0 23.94 0 27 0 C27 6.27 27 12.54 27 19 C24.03 19 21.06 19 18 19 C18 22.3 18 25.6 18 29 C15.03 29 12.06 29 9 29 C9 25.7 9 22.4 9 19 C6.03 19 3.06 19 0 19 C0 12.73 0 6.46 0 0 Z " fill="#111111" transform="translate(71,27)"/>
-        <path d="M0 0 C5.94 0 11.88 0 18 0 C18 9.24 18 18.48 18 28 C12.06 28 6.12 28 0 28 C0 18.76 0 9.52 0 0 Z " fill="#C50F1F" transform="translate(296,18)"/>
-        <path d="M0 0 C5.94 0 11.88 0 18 0 C18 6.27 18 12.54 18 19 C12.06 19 6.12 19 0 19 C0 12.73 0 6.46 0 0 Z " fill="#C50F1F" transform="translate(251,18)"/>
-        <path d="M0 0 C5.94 0 11.88 0 18 0 C18 6.27 18 12.54 18 19 C12.06 19 6.12 19 0 19 C0 12.73 0 6.46 0 0 Z " fill="#C50F1F" transform="translate(206,18)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 9.57 9 19.14 9 29 C6.03 29 3.06 29 0 29 C0 19.43 0 9.86 0 0 Z " fill="#111111" transform="translate(116,27)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 9.24 9 18.48 9 28 C6.03 28 3.06 28 0 28 C0 18.76 0 9.52 0 0 Z " fill="#111111" transform="translate(314,18)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 9.24 9 18.48 9 28 C6.03 28 3.06 28 0 28 C0 18.76 0 9.52 0 0 Z " fill="#111111" transform="translate(287,18)"/>
-        <path d="M0 0 C8.91 0 17.82 0 27 0 C27 2.97 27 5.94 27 9 C18.09 9 9.18 9 0 9 C0 6.03 0 3.06 0 0 Z " fill="#111111" transform="translate(368,56)"/>
-        <path d="M0 0 C5.94 0 11.88 0 18 0 C18 3.3 18 6.6 18 10 C12.06 10 6.12 10 0 10 C0 6.7 0 3.4 0 0 Z " fill="#111111" transform="translate(296,46)"/>
-        <path d="M0 0 C5.94 0 11.88 0 18 0 C18 3.3 18 6.6 18 10 C12.06 10 6.12 10 0 10 C0 6.7 0 3.4 0 0 Z " fill="#111111" transform="translate(296,8)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 6.27 9 12.54 9 19 C6.03 19 3.06 19 0 19 C0 12.73 0 6.46 0 0 Z " fill="#111111" transform="translate(350,37)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 6.27 9 12.54 9 19 C6.03 19 3.06 19 0 19 C0 12.73 0 6.46 0 0 Z " fill="#111111" transform="translate(332,37)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 6.27 9 12.54 9 19 C6.03 19 3.06 19 0 19 C0 12.73 0 6.46 0 0 Z " fill="#111111" transform="translate(269,18)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 6.27 9 12.54 9 19 C6.03 19 3.06 19 0 19 C0 12.73 0 6.46 0 0 Z " fill="#111111" transform="translate(350,8)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 6.27 9 12.54 9 19 C6.03 19 3.06 19 0 19 C0 12.73 0 6.46 0 0 Z " fill="#111111" transform="translate(332,8)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 3.3 9 6.6 9 10 C6.03 10 3.06 10 0 10 C0 6.7 0 3.4 0 0 Z " fill="#111111" transform="translate(341,27)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 3.3 9 6.6 9 10 C6.03 10 3.06 10 0 10 C0 6.7 0 3.4 0 0 Z " fill="#111111" transform="translate(116,8)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 2.97 9 5.94 9 9 C6.03 9 3.06 9 0 9 C0 6.03 0 3.06 0 0 Z " fill="#111111" transform="translate(98,18)"/>
-        <path d="M0 0 C2.97 0 5.94 0 9 0 C9 2.97 9 5.94 9 9 C6.03 9 3.06 9 0 9 C0 6.03 0 3.06 0 0 Z " fill="#111111" transform="translate(62,18)"/>
-    </svg>
-
-    <span style="color: #5c5b5b; font-size: small;">v0.1</span>
+    <img src="/ep/assets/EvilProxyBanner.png">
+    <span style="color: #5c5b5b; font-size: small;">v0.2</span>
 </header>
 
 <div class="container">
     <div class="sidebar">
         <a href="#" onclick="showSection('home')">Home</a>
         <a href="#" onclick="showSection('payloads')">Payloads</a>
-        <a href="#" onclick="showSection('keylogger')">Keylogger</a>
+        <a href="#" onclick="showSection('cookies')">Cookies</a>
     </div>
 
     <div id="home" class="main-content">
         <h2>Welcome back, anon.</h2>
         <div class="warning">
             <h3>This version is not ready for production!</h3>
-            <p>You are currently using version 0.1, which is not meant for production use. Some functionality might be missing.</p>
+            <p>You are currently using version 0.2, which is not meant for production use. Some functionality might be missing.</p>
+        </div>
+
+        <h3>Changelog</h3>
+        <div class="changelog">
+            <div class="changelog-entry">Added running script using command arguments functionality</div>
+            <div class="changelog-entry">Added default cookie logger</div>
+            <div class="changelog-entry">Design Changes, Bug Fixes and Security Improvements</div>
+        </div>
+
+        <div class="server-secret">
+            <span>Server Secret: <code id="current-path"></code></span>
+            <button onclick="copyPath()" class="copy-button">Copy</button>
         </div>
     </div>
 
     <div id="payloads" class="main-content">
         <h2>Payloads</h2>
         <p>To edit, remove or add a payload, go to the root directory, and configure the evil-script.js script from the panel folder as you wish.</p>
-
     </div>
 
-    <div id="keylogger" class="main-content">
+    <div id="cookies" class="main-content">
         <h2>Cookies</h2>
-        <div class="section">
-            <div class="item">cookie_name: cookie_value</div>
-            <div class="item">cookie_name: cookie_value</div>
-            <div class="item">cookie_name: cookie_value</div>
-        </div>
+        <p>For more information (like exact timestamp and IP), go to the root directory, and look at the cookies.json file.</p>
+        <div id="cookie-grid" class="cookie-grid">
+            <div class="cookie-card">
+                <div class="cookie-name">example</div>
+                <div class="cookie-value">If you are seeing this, it means that you are testing the design lol.</div>
+                <div class="cookie-timestamp">Logged: 2 minutes ago</div>
+            </div>
     </div>
 </div>
 
@@ -195,7 +267,61 @@
         }
     }
 
+    function copyPath() {
+        const path = window.location.pathname;
+        navigator.clipboard.writeText(path).then(() => {
+            const button = document.querySelector('.copy-button');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.textContent = 'Copy';
+            }, 800);
+        });
+    }
+
+    async function fetchCookies() {
+        try {
+            const response = await fetch('/ep/api/getCookies');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const cookies = await response.json();
+            populateCookies(cookies);
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+        }
+    }
+
+    function populateCookies(cookies) {
+        const cookieGrid = document.getElementById('cookie-grid');
+        cookieGrid.innerHTML = '';
+
+        cookies.forEach(cookie => {
+            const cookieCard = document.createElement('div');
+            cookieCard.className = 'cookie-card';
+
+            const cookieName = document.createElement('div');
+            cookieName.className = 'cookie-name';
+            cookieName.textContent = cookie.name;
+
+            const cookieValue = document.createElement('div');
+            cookieValue.className = 'cookie-value';
+            cookieValue.textContent = cookie.value;
+
+            const cookieTimestamp = document.createElement('div');
+            cookieTimestamp.className = 'cookie-timestamp';
+            cookieTimestamp.textContent = cookie.timestamp;
+
+            cookieCard.appendChild(cookieName);
+            cookieCard.appendChild(cookieValue);
+            cookieCard.appendChild(cookieTimestamp);
+            cookieGrid.appendChild(cookieCard);
+        });
+    }
+
+    // Initialize
     showSection('home');
+    document.getElementById('current-path').textContent = window.location.pathname;
+    fetchCookies();
 </script>
 
 </body>
