@@ -1,3 +1,4 @@
+#0.2
 import random, string, sys
 from proxy.server import *
 from colorama import Fore, init
