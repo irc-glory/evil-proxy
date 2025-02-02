@@ -1,0 +1,5 @@
+/* You can also inject custom CSS payloads to customize the target site as you wish. */
+
+*{
+    text-decoration: none !important;
+}

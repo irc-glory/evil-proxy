@@ -1,5 +1,4 @@
-<!--0.2-->
-![](https://raw.githubusercontent.com/irc-glory/evil-proxy/refs/heads/main/proxy/panel/EvilProxyBanner.png) v0.2
+![](https://raw.githubusercontent.com/irc-glory/evil-proxy/refs/heads/main/proxy/panel/EvilProxyBanner.png) v0.3
 # Evil Proxy
 An HTTP proxy designed to perform MITM phishing attacks, allowing users to inject JavaScript payloads into the victim's browser in the background, while displaying the live content of the target domain used to attack the victim.
 <br><br>
@@ -13,10 +12,26 @@ The project is still under development, and any contributions are welcome. There
 3. Launch tool:<br>
 `python main.py`<br>(or)<br>`python main.py <target> <host> <port>`
 
-**TIP:** To edit, remove or add a payload, go to the root directory, and configure the evil-script.js script from the panel folder as you wish.
+**TIP:** To edit, remove or add a payload, go to the proxy directory, and configure them from the payloads folder as you wish.
 # Showcase
 ![image](https://github.com/user-attachments/assets/2b6b92ea-48c1-4cfb-b758-82496647e2af)<br>
 <br>
-![image](https://github.com/user-attachments/assets/88ccfaea-7751-4e26-a055-0c1e1bd546d1)<br>
-<br>
-![image](https://github.com/user-attachments/assets/8408a264-58c3-4452-a5f3-85079c53d9da)
+
+<p align="center">
+<h1 align="center">Sponsorship</h1>
+
+<p align="center">If you find my work valuable, you can show your support by sponsoring me. 
+  Your contribution will help me maintain and improve my projects, and it will encourage me to create more useful content.</p>
+
+<p align="center">
+  <a href="https://buymeacoffee.com/irc.glory"><img src="https://img.shields.io/badge/-Buy%20me%20a%20coffee-orange?style=for-the-badge&logo=buy-me-a-coffee&logoColor=white" alt="Buy me a coffee"></a>
+</p>
+
+
+<p align="center">Thank you to the following people for their support:</p>
+
+<div align="center">
+  <a href="https://github.com/irc-glory/evil-proxy/stargazers">
+    <img src="https://reporoster.com/stars/dark/irc-glory/evil-proxy" alt="Stargazers" title="Stargazers" width="400" height="auto">
+  </a>
+</div>
