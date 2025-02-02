@@ -36,7 +36,7 @@ else:
 
     for i, name, explanation in zip([target, host, port], ["target-domain-name", "host-ip", "port"], ["Please input the target that you want to proxy to.\nExample: www.google.com", "Please input the host in which the server will be running in.\nExample: localhost", "Please insert the port in which the server will be running in.\nExample: 3000"]):
         if i == "":
-            print(f"\n{Fore.RESET}No default case for {Fore.RED}{n}{Fore.RESET}.\n{e}") # unknown x, name, explanation
+            print(f"\n{Fore.RESET}No default case for {Fore.RED}{n}{Fore.RESET}.\n{e}")
             sys.exit(1)
 
 secret = ''.join(random.choice(string.ascii_letters + string.digits + "@$-_/") for _ in range(random.randint(32, 55)))
